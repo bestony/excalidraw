@@ -1,8 +1,4 @@
-import {
-  BOUND_TEXT_PADDING,
-  MIN_FONT_SIZE,
-  SHIFT_LOCKING_ANGLE,
-} from "../constants";
+import { MIN_FONT_SIZE, SHIFT_LOCKING_ANGLE } from "../constants";
 import { rescalePoints } from "../points";
 
 import { rotate, centerPoint, rotatePoint } from "../math";
@@ -51,7 +47,7 @@ import {
   getApproxMinLineHeight,
   wrapText,
   measureText,
-  getMinCharWidth,
+  getMinTextElementWidth,
 } from "./textElement";
 import { LinearElementEditor } from "./linearElementEditor";
 import { isInGroup } from "../groups";
@@ -182,7 +178,7 @@ const rotateSingleElement = (
   }
 };
 
-const rescalePointsInElement = (
+export const rescalePointsInElement = (
   element: NonDeletedExcalidrawElement,
   width: number,
   height: number,
@@ -199,7 +195,7 @@ const rescalePointsInElement = (
       }
     : {};
 
-const measureFontSizeFromWidth = (
+export const measureFontSizeFromWidth = (
   element: NonDeleted<ExcalidrawTextElement>,
   elementsMap: ElementsMap,
   nextWidth: number,
@@ -352,8 +348,13 @@ const resizeSingleTextElement = (
     const boundsCurrentWidth = esx2 - esx1;
 
     const atStartBoundsWidth = startBottomRight[0] - startTopLeft[0];
-    const minWidth =
-      getMinCharWidth(getFontString(element)) + BOUND_TEXT_PADDING * 2;
+    const minWidth = getMinTextElementWidth(
+      getFontString({
+        fontSize: element.fontSize,
+        fontFamily: element.fontFamily,
+      }),
+      element.lineHeight,
+    );
 
     let scaleX = atStartBoundsWidth / boundsCurrentWidth;
 

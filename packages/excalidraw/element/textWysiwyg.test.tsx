@@ -576,7 +576,7 @@ describe("textWysiwyg", () => {
 
     it("text should never go beyond max width", async () => {
       UI.clickTool("text");
-      mouse.clickAt(750, 300);
+      mouse.click(0, 0);
 
       textarea = await getTextEditor(textEditorSelector, true);
       updateTextEditor(
@@ -1064,7 +1064,7 @@ describe("textWysiwyg", () => {
       expect([h.elements[1].x, h.elements[1].y]).toMatchInlineSnapshot(`
         [
           85,
-          4.999999999999986,
+          "5.00000",
         ]
       `);
 
@@ -1109,8 +1109,8 @@ describe("textWysiwyg", () => {
       UI.resize(rectangle, "ne", [rectangle.x + 100, rectangle.y - 100]);
       expect([h.elements[1].x, h.elements[1].y]).toMatchInlineSnapshot(`
         [
-          374.99999999999994,
-          -535.0000000000001,
+          "375.00000",
+          "-535.00000",
         ]
       `);
     });
